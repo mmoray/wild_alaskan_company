@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+
+  # The Application
+  app:
+    image: ${CONTAINER_REGISTRY_BASE}/app
+    build:
+      context: ./app
+      args:
+        - XDEBUG_VERSION=${WORKSPACE_XDEBUG_VERSION}
+      target: assessment-php-${APP_ENV}      
+    environment:
+      # See https://docs.docker.com/docker-for-mac/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host
+      # See https://github.com/docker/for-linux/issues/264
+      # The `remote_host` below may optionally be replaced with `remote_connect_back`
+      XDEBUG_CONFIG: >-
+        remote_enable=1
+        remote_host=host.docker.internal
+        remote_connect_back=0
+        remote_autostart=on
+        remote_port=9001
+        idekey=VSCODE
+      PHP_IDE_CONFIG: serverName=assessment.local

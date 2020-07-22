@@ -1,0 +1,62 @@
+version: '3.4'
+services:
+
+  # The Application
+  app:
+    image: ${CONTAINER_REGISTRY_BASE}/app:builder
+    build:
+      context: ./app
+    environment:
+      - APP_ENV=${APP_ENV}
+      - XDEBUG_VERSION=${WORKSPACE_XDEBUG_VERSION}
+    working_dir: /var/www
+    volumes:
+      - ./app/assessment_repo/:/var/www:rw,delegated
+    env_file: 
+      - .env
+    depends_on:
+      - database 
+
+  # The Web Server
+  web:
+    image: ${CONTAINER_REGISTRY_BASE}/web
+    build:
+      context: ./tools/nginx
+    working_dir: /var/www
+    environment:
+      - APP_ENV=${APP_ENV}
+    volumes:
+      - ./app/assessment_repo/:/var/www:ro,delegated
+      - ./tools/nginx/etc/nginx:/etc/nginx:rw,cached
+    ports:
+      - 80:80
+    depends_on:
+      - app
+    restart: on-failure   
+    networks:
+      default:
+        aliases:
+          - matthewmoray-dev.local
+
+  # The Database
+  database:
+    image: ${CONTAINER_REGISTRY_BASE}/database
+    build:
+      context: ./tools/mysql
+    volumes:
+      - ${MYSQL_PATH}:/var/lib/mysql:rw,delegated
+      - ./tools/mysql/conf.d:/etc/mysql/conf.d:ro,cached
+      - ./tools/mysql/log:/var/log/mysql:rw,delegated
+    restart: on-failure   
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASS}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASS}
+      - MYSQL_DATABASE=wild_alaskan_company
+      - MYSQL_PORT=3306
+    ports:
+        - "3306:3306"
+    networks:
+      default:
+        aliases:
+          - database.matthewmoray-dev.local
