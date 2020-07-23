@@ -14,8 +14,6 @@ services:
       - ./app/assessment_repo/:/var/www:rw,delegated
     env_file: 
       - .env
-    depends_on:
-      - database 
 
   # The Web Server
   web:
