@@ -4,8 +4,9 @@ RUN mkdir /usr/share/man/man1
 
 # Laravel minimum required php packages from https://laravel.com/docs/7.x/installation
 RUN apt-get update -yqq && apt-get install -yqq \
-        openssl \ 
         libzip-dev \
+        openssl \ 
+        vim \
         zip \
         && docker-php-ext-configure zip --with-libzip \
         && apt-get clean \
@@ -35,21 +36,3 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 ENTRYPOINT ["docker-entrypoint"]
 
 CMD ["php-fpm"]
-
-################################################################################
-# Development Environment
-################################################################################
-FROM assessment-php AS assessment-php-development
-
-RUN apt-get update -yqq && apt-get install -yqq \
-        vim \
-        && apt-get clean \
-        && rm -rf /var/lib/apt/lists/* 
-
-ARG XDEBUG_VERSION
-RUN pecl install xdebug-$XDEBUG_VERSION; \
-        docker-php-ext-enable xdebug;
-
-COPY ./php/php-fpm/www-custom.conf usr/local/etc/php-fpm.d/www-custom.conf
-COPY ./scripts/.bash_profile /root/.bashrc
-RUN chmod +x /root/.bashrc
