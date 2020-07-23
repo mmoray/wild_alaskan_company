@@ -9,7 +9,7 @@ fi
 [ -z "$APP_ENV" ] && APP_ENV=production
 echo "App Container Environment: ${APP_ENV}"
 
-# Update this to set up the application (run migrations, composer, etc.)
+# Setup application when booting container (composer, front-end build, migrations, etc.)
 if [ -f "/var/www/composer.lock" ]; then
 	echo "Installing composer dependencies"
 	composer install --ignore-platform-reqs

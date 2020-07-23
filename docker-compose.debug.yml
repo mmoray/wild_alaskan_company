@@ -20,4 +20,5 @@ services:
         remote_autostart=on
         remote_port=9001
         idekey=VSCODE
-      PHP_IDE_CONFIG: serverName=assessment.local
+      PHP_IDE_CONFIG: 
+        serverName=${CONTAINER_REGISTRY_BASE}.local
