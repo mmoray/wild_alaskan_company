@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6558f74828bca9ebecac73d90cea4b1a",
+    "content-hash": "5cb0015fd2b7b4928c9d54e1c780a584",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1072,6 +1072,46 @@
                 "storage"
             ],
             "time": "2020-05-18T15:13:39+00:00"
+        },
+        {
+            "name": "matthewmoray/assessment",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mmoray/resource_router.git",
+                "reference": "2cf4c7c98cf56e76e07aac9d0ae290d5cc8e28a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mmoray/resource_router/zipball/2cf4c7c98cf56e76e07aac9d0ae290d5cc8e28a6",
+                "reference": "2cf4c7c98cf56e76e07aac9d0ae290d5cc8e28a6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.0"
+            },
+            "suggest": {
+                "illuminate/support": "Required to use the composer class (^7.0)."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MatthewMoray\\Assessment\\ResourceRouteProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MatthewMoray\\Assessment\\": "src"
+                }
+            },
+            "description": "Composer Package for Wild Alaskan Company Assessment.",
+            "support": {
+                "source": "https://github.com/mmoray/resource_router/tree/master",
+                "issues": "https://github.com/mmoray/resource_router/issues"
+            },
+            "time": "2020-07-23T20:50:35+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5925,7 +5965,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "matthewmoray/assessment": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
